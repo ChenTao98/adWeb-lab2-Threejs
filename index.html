@@ -91,15 +91,15 @@
             model.position.set(data.position.x, data.position.y, data.position.z);
             model.rotation.set(data.rotation._x, data.rotation._y + Math.PI / 2, data.rotation._z);
         } else {
-            socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
+            socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});//添加
             const loader = new THREE.GLTFLoader();
             loader.load("./assets/models/duck.glb", (mesh) => {
                 mesh.scene.scale.set(10, 10, 10);
                 scene.add(mesh.scene);
                 playerMap.set(data.socketid, mesh.scene);
-                let model = playerMap.get(data.socketid);
-                model.position.set(data.position.x, data.position.y, data.position.z);
-                model.rotation.set(data.rotation._x, data.rotation._y + Math.PI / 2, data.rotation._z);
+                let model = playerMap.get(data.socketid);//添加
+                model.position.set(data.position.x, data.position.y, data.position.z);//添加
+                model.rotation.set(data.rotation._x, data.rotation._y + Math.PI / 2, data.rotation._z);//添加
             });
         }
     });
