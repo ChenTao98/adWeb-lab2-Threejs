@@ -77,13 +77,7 @@
     scene.add(fpc.yawObject);
 
     let clock = new THREE.Clock();
-    function render() {
-        fpc.update(clock.getDelta());
-        socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
-        requestAnimationFrame(render);
-        renderer.render(scene, camera);
-    }
-    render();
+
     window.addEventListener("resize", onWindowResize);
     function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -97,7 +91,7 @@
             model.position.set(data.position.x, data.position.y, data.position.z);
             model.rotation.set(data.rotation._x, data.rotation._y + Math.PI / 2, data.rotation._z);
         } else {
-            // socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
+            socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
             const loader = new THREE.GLTFLoader();
             loader.load("./assets/models/duck.glb", (mesh) => {
                 mesh.scene.scale.set(10, 10, 10);
@@ -115,10 +109,17 @@
             playerMap.delete(data.socketid)
         }
     });
-    function autoSend() {
+    // function autoSend() {
+    //     socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
+    // }
+    // setInterval("autoSend()",1000);
+    function render() {
+        fpc.update(clock.getDelta());
         socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
     }
-    setInterval("autoSend()",1000);
+    render();
 </script>
 </body>
 </html>
