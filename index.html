@@ -97,7 +97,7 @@
             model.position.set(data.position.x, data.position.y, data.position.z);
             model.rotation.set(data.rotation._x, data.rotation._y + Math.PI / 2, data.rotation._z);
         } else {
-            socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
+            // socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
             const loader = new THREE.GLTFLoader();
             loader.load("./assets/models/duck.glb", (mesh) => {
                 mesh.scene.scale.set(10, 10, 10);
@@ -115,6 +115,10 @@
             playerMap.delete(data.socketid)
         }
     });
+    function autoSend() {
+        socket.emit('player', {position: fpc.yawObject.position, rotation: fpc.yawObject.rotation});
+    }
+    setInterval("autoSend()",1000);
 </script>
 </body>
 </html>
