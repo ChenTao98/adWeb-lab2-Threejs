@@ -20,7 +20,6 @@
 </head>
 <body>
 <script>
-    const socket = io('http://54.211.33.21:3000');
     const scene = new THREE.Scene();
     const SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
     const VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.3, FAR = 1000;
@@ -85,6 +84,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
     let playerMap = new Map();
+    const socket = io('http://54.211.33.21:3000');
     socket.on('player', data => {
         if (playerMap.has(data.socketid)) {
             let model = playerMap.get(data.socketid);
